@@ -2,10 +2,11 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import java.io.FileReader;
 import java.util.Scanner;
 
 public class QuizSystem {
-    private static final String USERS_FILE_PATH = "users.json";
+    private static final String USERS_FILE_PATH = "./src/main/resources/users.json";
     private static JSONArray users;
 
     public static void main(String[] args) {
@@ -33,14 +34,11 @@ public class QuizSystem {
     }
 
     private static void loadUsers() {
-        // Load users from the JSON file
-        // JSON parsing logic to load users from the JSON file
-        // For simplicity, we'll use a predefined JSON array
-        String usersJson = "[{\"username\":\"admin\",\"password\":\"1234\",\"role\":\"admin\"},{\"username\":\"salman\",\"password\":\"1234\",\"role\":\"student\"}]";
         JSONParser parser = new JSONParser();
 
-        try {
-            users = (JSONArray) parser.parse(usersJson);
+        try (FileReader reader = new FileReader(USERS_FILE_PATH)) {
+            // Parse the JSON file and cast it to a JSONArray
+            users = (JSONArray) parser.parse(reader);
         } catch (Exception e) {
             e.printStackTrace();
         }
